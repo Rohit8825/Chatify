@@ -5,6 +5,11 @@ export default {
     "./index.html",
     "./src/**/*.{js,ts,jsx,tsx}",
   ],
-  theme: { extend: {} },
+  theme: {
+    extend: {},
+  },
   plugins: [daisyui],
+  daisyui: {
+    themes: true, // Enable all default themes
+  },
 }

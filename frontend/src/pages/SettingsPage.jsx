@@ -10,12 +10,49 @@ const PREVIEW_MESSAGES = [
 const SettingsPage = () => {
   const { theme, setTheme } = useThemeStore();
 
+  console.log("Current theme in SettingsPage:", theme);
+
+  const testTheme = (themeName) => {
+    console.log("Testing theme:", themeName);
+    setTheme(themeName);
+    
+    // Check if theme was applied
+    setTimeout(() => {
+      const htmlTheme = document.documentElement.getAttribute("data-theme");
+      const bodyTheme = document.body.getAttribute("data-theme");
+      console.log("HTML theme after change:", htmlTheme);
+      console.log("Body theme after change:", bodyTheme);
+    }, 100);
+  };
+
   return (
     <div className="h-screen container mx-auto px-4 pt-20 max-w-5xl">
       <div className="space-y-6">
         <div className="flex flex-col gap-1">
           <h2 className="text-lg font-semibold">Theme</h2>
           <p className="text-sm text-base-content/70">Choose a theme for your chat interface</p>
+        </div>
+
+        {/* Theme Test Buttons */}
+        <div className="flex gap-2 mb-4">
+          <button 
+            onClick={() => testTheme("light")}
+            className="btn btn-sm btn-outline"
+          >
+            Test Light
+          </button>
+          <button 
+            onClick={() => testTheme("dark")}
+            className="btn btn-sm btn-outline"
+          >
+            Test Dark
+          </button>
+          <button 
+            onClick={() => testTheme("cupcake")}
+            className="btn btn-sm btn-outline"
+          >
+            Test Cupcake
+          </button>
         </div>
 
         <div className="grid grid-cols-4 sm:grid-cols-6 md:grid-cols-8 gap-2">
@@ -45,7 +82,7 @@ const SettingsPage = () => {
 
         {/* Preview Section */}
         <h3 className="text-lg font-semibold mb-3">Preview</h3>
-        <div className="rounded-xl border border-base-300 overflow-hidden bg-base-100 shadow-lg">
+        <div className="rounded-xl border border-base-300 overflow-hidden bg-base-100 shadow-lg" data-theme={theme}>
           <div className="p-4 bg-base-200">
             <div className="max-w-lg mx-auto">
               {/* Mock Chat UI */}

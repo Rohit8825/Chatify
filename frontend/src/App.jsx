@@ -24,6 +24,29 @@ const App = () => {
     checkAuth();
   }, [checkAuth]);
 
+  // Apply theme to HTML root element for DaisyUI to work properly
+  useEffect(() => {
+    if (theme) {
+      console.log("Applying theme to HTML:", theme);
+      document.documentElement.setAttribute("data-theme", theme);
+      document.body.setAttribute("data-theme", theme);
+      // Force a re-render by toggling a class
+      document.documentElement.classList.toggle("theme-changed");
+      setTimeout(() => {
+        document.documentElement.classList.toggle("theme-changed");
+      }, 100);
+    }
+  }, [theme]);
+
+  // Apply theme immediately on mount
+  useEffect(() => {
+    const savedTheme = localStorage.getItem("chat-theme") || "light";
+    console.log("Initial theme from localStorage:", savedTheme);
+    document.documentElement.setAttribute("data-theme", savedTheme);
+    document.body.setAttribute("data-theme", savedTheme);
+    console.log("Initial theme applied to HTML:", savedTheme);
+  }, []);
+
   console.log({ authUser });
 
   if (isCheckingAuth && !authUser)
@@ -34,7 +57,7 @@ const App = () => {
     );
 
   return (
-    <div data-theme={theme}>
+    <div>
       <Navbar />
 
       <Routes>
